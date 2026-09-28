@@ -1,0 +1,250 @@
+\documentclass[12pt]{article}
+\usepackage{KUstyle}
+\usepackage[margin=0.8in]{geometry} 
+\usepackage{setspace} 
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{tabularx} 
+\usepackage{booktabs}
+\usepackage{adjustbox}
+\usepackage{longtable}
+\usepackage{pdflscape}
+\usepackage{threeparttable} 
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{natbib}
+\usepackage{amsfonts}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\setlist[itemize,1]{label=\textcolor{black}{\tiny $\bullet$}}
+\setlist[itemize,2]{label=\textcolor{black}{\tiny $\bullet$}}
+\setlist[itemize,3]{label=\textcolor{black}{\tiny $\bullet$}}
+\usepackage{fix-cm}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\onehalfspacing
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+\ptype{Master Thesis in Agricultural Economics}
+\author{}
+\title{A Field-level Model of Agriculture's Socioeconomic and Environmental Contribution}
+\subtitle{}
+\date{Date: {June 2026}}
+\advisor{Advisors: {Jakob Vesterlund Olsen, Arne Henningsen and Mette Asmild}}
+
+
+
+
+\renewcommand{\contentsname}{Table of content}
+
+\begin{document}
+
+\section*{Resultater - Sammenligning med Danmarks Statistik}
+
+\section{Konventionelle producenter - inkl. husdyrproducenter}
+
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Comparison of field-level estimates with Statistics Denmark (DST) benchmarks, kr/ha - \textbf{incl. Livestockfarms}}
+\label{tab:dst-comparison}
+\begin{threeparttable}
+\begin{tabular}{lrrrrrr}
+\toprule
+ & \multicolumn{2}{c}{\textbf{Winter Wheat}} & &
+   \multicolumn{2}{c}{\textbf{Spring Barley}} \\
+\cmidrule{2-3}\cmidrule{5-6}
+\textbf{Variable} & \textbf{Thesis} & \textbf{DST} & &
+                    \textbf{Thesis} & \textbf{DST} \\
+\midrule\addlinespace
+N farms (fields)                  &  609 (4,003) &   703 & & 697 (5,455) &   861 \\
+\addlinespace
+
+\textbf{Gross yield}              
+& \textbf{9,776} & \textbf{11,048} & &
+  \textbf{6,503} & \textbf{8,686} \\
+\addlinespace
+
+Costs I                           &       5,264 &  5,720 & &       4,342 &  4,458 \\
+\quad Seed                        &         616 &    680 & &         835 &    816 \\
+\quad Fertiliser                  &       1,471 &  1,347 & &         666 &    869 \\
+\quad Plant protection            &       1,363 &  1,471 & &         680 &    632 \\
+\quad Misc.\ field costs          &         489 &    477 & &         379 &    468 \\
+\quad Energy incl.\ fuel          &         896 &    724 & &         913 &    787 \\
+\quad \quad Energy excl.\ fuel    &         187 &     -- & &         271 &     -- \\
+\quad \quad Fuel                  &         709 &     -- & &         642 &     -- \\
+\quad Contractor services         &         429 &    731 & &         869 &    730 \\
+\quad Interest, inventory         &          -- &    289 & &          -- &    155 \\
+\addlinespace
+
+\textbf{Costs I excl.\ interest}  
+& \textbf{5,264} & \textbf{5,431} & &
+  \textbf{4,342} & \textbf{4,303} \\
+\addlinespace
+
+Costs II                          &       4,061 &  4,122 & &       4,569 &  4,533 \\
+\quad Labor                       &       2,272 &  2,023 & &       2,842 &  2,244 \\
+\quad Maintenance, fields         &         748 &    803 & &         699 &    850 \\
+\quad Depreciation, fields        &       1,041 &    949 & &       1,028 &  1,027 \\
+\quad Interest, equipment         &          -- &    347 & &          -- &    411 \\
+\addlinespace
+
+\textbf{Costs II excl.\ interest} 
+& \textbf{4,061} & \textbf{3,775} & &
+  \textbf{4,569} & \textbf{4,122} \\
+\addlinespace
+
+\midrule
+\textbf{DBII excl.\ interest}     
+& \textbf{451} & \textbf{1,842} & &
+  \textbf{$-$2,408} & \textbf{261} \\
+\bottomrule
+\end{tabular}
+
+\begin{tablenotes}
+\footnotesize
+\item \textit{Notes:} Thesis = area-weighted field-level averages; fields and unique farms
+(in parentheses) are reported for the thesis sample, while DST reports farm-level sample
+sizes. DST = 2024 benchmarks from Statistics Denmark (REGNPRO1). Energy excl.\ fuel and
+Fuel are reported separately in the thesis but combined as ``Energy incl.\ fuel'' to match
+DST's ``Energi'' aggregate. DST includes interest on inventory
+(Rentebelastning, beholdning) in Costs I and interest on equipment
+(Rentebelastning, inventar) in Costs II. The rows ``Costs I excl.\ interest'',
+``Costs II excl.\ interest'', and ``DBII excl.\ interest'' harmonize DST totals
+with the field-level estimates by excluding these financing costs.
+\end{tablenotes}
+
+\end{threeparttable}
+\end{table}  
+
+
+\begin{table}[H]
+\centering
+\small
+\caption{Average gross yield (DKK/ha/year) for winter wheat fields by catchment and soil type}
+\label{tab:yield-vinterhvede}
+\begin{threeparttable}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Catchment} & \textbf{Fields} & \textbf{Yield} & \textbf{Fine} &
+\textbf{Coarse} & \textbf{Loamy} \\
+\midrule\addlinespace
+Lister Dyb                 & 450 & 8,531  & 8,119 (119)  & 8,181 (74)   & 8,777 (257) \\
+Nissum Bredning            & 199 & 8,394  & 9,767 (49)   & 9,052 (23)   & 7,884 (127) \\
+Nissum Fjord, Felsted Kog  & 212 & 8,168  & 7,978 (52)   & 8,077 (40)   & 8,269 (120) \\
+Thisted Bredning           & 280 & 9,390  & 9,955 (57)   & 8,044 (35)   & 9,482 (188) \\
+Nibe Bredning og Langerak  & 750 & 9,401  & 9,286 (245)  & 9,225 (78)   & 9,492 (427) \\
+Randers Fjord, indre       & 875 & 9,999  & 10,187 (216) & 10,091 (97)  & 9,922 (562) \\
+Horsens Fjord, indre       & 243 & 9,698  & 9,750 (60)   & 9,674 (33)   & 9,685 (150) \\
+Odense Fjord, Seden Strand & 320 & 10,673 & 10,627 (74)  & 10,433 (41)  & 10,722 (205) \\
+Isefjord, indre            & 215 & 10,922 & 11,561 (49)  & $-$           & 10,745 (148) \\
+Karrebæk Fjord             & 361 & 11,086 & 11,489 (74)  & 10,779 (52)  & 11,025 (235) \\
+Roskilde Fjord, indre      &  98 & 11,466 & 11,225 (25)  & $-$           & 11,735 (61) \\
+\addlinespace\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item \textit{Notes:} All values are measured in DKK per hectare, and weighted by area;
+Yield denotes the catchment-level area-weighted average gross yield;
+Fine, Coarse, and Loamy refer to average gross yield for fields on the respective
+soil type within each catchment; numbers in parentheses indicate the number of
+fields; `$-$' indicates fewer than 20 fields and is therefore not reported.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+
+
+\begin{table}[H]
+\centering
+\small
+\caption{Average gross yield (DKK/ha/year) for spring barley fields by catchment and soil type}
+\label{tab:yield-vaarbyg}
+\begin{threeparttable}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Catchment} & \textbf{Fields} & \textbf{Yield} & \textbf{Fine} &
+\textbf{Coarse} & \textbf{Loamy} \\
+\midrule\addlinespace
+Lister Dyb                 & 741   & 5,854 & 6,568 (177) & 5,116 (120)  & 5,798 (444) \\
+Nissum Bredning            & 452   & 6,638 & 7,224 (106) & 5,781 (68)   & 6,546 (278) \\
+Nissum Fjord, Felsted Kog  & 979   & 6,824 & 7,696 (263) & 5,749 (179)  & 6,758 (537) \\
+Thisted Bredning           & 359   & 6,593 & 7,103 (107) & 5,526 (52)   & 6,592 (200) \\
+Nibe Bredning og Langerak  & 1,079 & 6,591 & 7,423 (376) & 4,904 (155)  & 6,409 (548) \\
+Randers Fjord, indre       & 979   & 6,849 & 7,558 (234) & 6,213 (138)  & 6,724 (607) \\
+Horsens Fjord, indre       & 181   & 5,908 & 6,755 (38)  & 5,261 (23)   & 5,766 (120) \\
+Odense Fjord, Seden Strand & 248   & 6,486 & 7,560 (58)  & 4,826 (37)   & 6,581 (153) \\
+Isefjord, indre            & 119   & 6,832 & 6,315 (28)  & $-$           & 7,117 (82)  \\
+Karrebæk Fjord             & 259   & 5,857 & 6,680 (59)  & 4,444 (32)   & 5,809 (168) \\
+Roskilde Fjord, indre      &  59   & 4,650 & $-$          & $-$           & 4,803 (37)  \\
+\addlinespace\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item \textit{Notes:} All values are measured in DKK per hectare, and weighted by area;
+Yield denotes the catchment-level area-weighted average gross yield;
+Fine, Coarse, and Loamy refer to average gross yield for fields on the respective
+soil type within each catchment; numbers in parentheses indicate the number of
+fields; `$-$' indicates fewer than 20 fields and is therefore not reported.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+
+
+
+
+\section{Resultater - Kun konventionelle planteproducenter}
+
+
+
+
+
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Comparison of field-level estimates with Statistics Denmark (DST) benchmarks, DKK/ha}
+\label{tab:dst-comparison}
+\begin{threeparttable}
+\begin{tabular}{lrrrrrr}
+\toprule
+ & \multicolumn{2}{c}{\textbf{Winter Wheat}} & & \multicolumn{2}{c}{\textbf{Spring Barley}} \\
+\cmidrule{2-3} \cmidrule{5-6}
+\textbf{Variable} & \textbf{Thesis} & \textbf{DST} & & \textbf{Thesis} & \textbf{DST} \\
+\midrule
+\addlinespace
+N fields (farms)             & 1,694 (281) & (703) & & 2,160 (310) & (861) \\
+\addlinespace
+Gross yield                  &  9,857 & 11,048 & &  5,839 &  8,686 \\
+\addlinespace
+Costs I                      &  4,272 &  5,720 & &  3,048 &  4,458 \\
+Seed                   &    602 &    680 & &    816 &    816 \\
+Fertiliser             &  1,750 &  1,347 & &  1,143 &    869 \\
+Plant protection       &  1,326 &  1,471 & &    597 &    632 \\
+Misc. field costs      &    594 &    477 & &    491 &    468 \\
+\addlinespace
+Costs II                     &  4,998 &  4,122 & &  4,603 &  4,533 \\
+Contractor services    &    488 &    731 & &    820 &    730 \\
+Energy     &    705 &    724 & &    699 &    787 \\
+Labor                  &  1,976 &  2,023 & &  1,759 &  2,244 \\
+Maintenance, fields    &    700 &    803 & &    454 &    850 \\
+Depreciation, fields   &  1,129 &    949 & &    872 &  1,027 \\
+\addlinespace
+DBII                &    591 &  2,757 & & $-$1,640 &  1,001 \\
+\addlinespace
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item \textit{Notes:} Thesis refers to area-weighted averages from the field-level dataset; fields and unique farms (in parentheses) are reported for the thesis sample, while DST reports farm-level sample sizes. DST refers to 2024 benchmarks from Statistics Denmark's production branch accounts for conventional agriculture (REGNPRO1). Energy excl. fuel (OMK6) and Fuel (OMK7) are reported separately in the thesis sample but combined as ``Energy incl. fuel'' to match the DST ``Energi'' aggregate. `--' indicates the item is not separately reported in the respective source.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+
+
+
+\end{document}

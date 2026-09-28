@@ -1,0 +1,325 @@
+\documentclass[12pt]{article}
+\usepackage[margin=0.8in]{geometry} 
+\usepackage{amsmath}
+\usepackage{natbib}
+
+\begin{document}
+
+\section{Output-Level Allocation}
+The specification of our model is based on an accounting identity \citep{henningsen2023}:
+\begin{align}
+    c_i \equiv \sum_{j=1}^J a_{ij} x_{ij} 
+    \label{eq:accountingID}
+\end{align}
+for all $i=1,…,N$ farms and $j=1,…,J$ output types (barley, wheat, rye, etc.). 
+The total cost for farm $i$, denoted $c_i$, is observed directly from the accounting data. 
+Furthermore, $x_j$ denotes a vector describing the observed scope of production branches (hectares of barley, hectares of wheat, etc.). 
+% Formally, $$x_j = (x_{1j},\ldots, x_{Nj})^T \in \mathbb{R}_{\geq 0}^{N}$$ Where each element $x_{ij}$, represents the production scale of output $j$ on farm $i$. 
+The variable of specific interest is $a_{ij}$, representing a vector of input allocation coefficients to be estimated. 
+This unobserved 'latent' variable, is defined as the value of input needed to produce one unit of output $j$ by farm $i$. 
+As such, it is defined as: 
+\begin{align}
+a_{ij} = \beta_{j0}+ \sum_{k=1}^{K}\gamma_{jk}z_{ik},
+\end{align}
+for all $i=1,…,N$ farms, and $k=1,...,K$ number of observed farm-specific characteristics (e.g., farm size, soil type, availability of slurry, and livestock units). 
+The observed farm characteristics are indicated by $z_k$,
+% $$z_k = (z_{1k}, \ldots, z_{Nk})^{\top} \in \mathbb{R}^{N},$$
+and $\gamma_k$ represents a vector of  farm-specific coefficients to be estimated.
+% $$\gamma_k = (\gamma_{1k}, \ldots, \gamma_{Jk})^{\top} \in \mathbb{R}^{J},$$
+That is, each element in $\gamma_{jk}$ represents the effect of farm characteristic $k$ on the input allocation for output $j$. 
+% It is noted that in the special (unrealistic) case of no observed farm characteristics at a given farm $i$, $z_{ik}=0$, the input allocation coefficient vector $a_{ij}$ reduces to: $\beta = (\beta_{10}, \ldots, \beta_{J0})^{\top}$.
+\\[0.25cm]
+The objective of this model is thus to estimate the unknown input allocation coefficients ($a_{ij}$), and then based on the estimated coefficients, obtain the output-specific input quantities.
+
+\subsection{Estimation Procedure}
+To ensure that estimates are in line with micro-economic theory and practical knowledge (i.e., we would like to exploit prior knowledge about some of the parameters), we use Bayesian Hamiltonian Markov-Chain Monte Carlo (MCMC), which are well suited for modeling input–output relationships such as those in agricultural data \citep{zitthen2022}.
+It is reasonable to assume that the values of the input allocations coefficients are log-normally distributed with the location parameters of the log-normal distributions depending on observed firm characteristics. 
+This is the case although there is no error term. 
+Hence, we got:
+\begin{align}
+    a_{ij}\sim \text{lognormal}(\beta_{j0}+\sum_{k=1}^K \gamma_{jk} \, z_{ik}, \, \sigma_{j}^2)
+\end{align}
+for all $i=1,...,N,$ $j=1 , \ldots, J$ and $k=1 , \ldots, K$, where $\beta_{j0}$, $\gamma_{jk}$, and $\sigma_{j}^2$ are the unknown parameters to be estimated.
+However, we cannot calculate a log-likelihood value based on the distributions defined in (\ref{eq:CoeflogNormal}), because the input allocation coefficients are unobserved/unknown.
+Therefore, it seems reasonable to find an approximate distribution of $c_i$, i.e. the sum of log-normal distributions.
+To emphasize this we will use the capital letter $C_i$ in the following, stipulating the probabilistic model to be given as log-normal distributions of $C_i$.
+\\
+Given the unknown parameters and the observed firm characteristics, we calculate the expected values and  variances of the input allocation coefficients as:
+\begin{align}
+    \text{E}[a_{ij}]
+    & =\exp (\beta_{j0}+\sum_{k=1}^K \gamma_{jk} \, z_{ik} +        
+    0.5\cdot \sigma_{j}^2) 
+    \label{eq:omegaExp} \\
+    \text{Var}[a_{ij}]
+    & =(\exp(\sigma_{j}^2)-1) \cdot \exp(2\cdot\beta_{j0} +
+    2\cdot\sum_{k=1}^K\gamma_{jk} \, z_{ik}+\sigma_{j}^2)
+\end{align}
+for all $i=1,\ldots,N$ and $j=1,\ldots,J$. 
+Combining (\ref{eq:accountingID}) with (\ref{eq:omegaExp})-(\ref{eq:omegaVar}), the expected total cost and variances are calculated by:
+\begin{align}
+    \text{E}[c_i]
+    & = \sum_{j=1}^J \text{E}[a_{ij}] \cdot x_{ij} \\
+    & = \sum_{j=1}^J \exp (\beta_{j0} +\sum_{k=1}^K \gamma_{jk} \, z_{ik} + 0.5\cdot \sigma_{j}^2) \cdot x_{ij}
+    \label{eq:yExp} \\
+    \text{Var}[c_i]
+    & = \sum_{j=1}^J \text{Var}[a_{ij}] \cdot x_{ij} \\
+    & = \sum_{j=1}^J (\exp(\sigma_{j}^2)-1) \cdot \exp(2\cdot\beta_{j0} + 2\cdot\sum_{k=1}^K\gamma_{jk} \, z_{ik}+\sigma_{j}^2) \cdot x_{ij}
+\end{align}
+for all $i=1,...,N$ and $j=1,...,J.$ 
+This gives an approximate log-normal distribution of $C_i$:
+\begin{align}
+    C_i 
+    & \sim \text{lognormal} (\mu_i,\sqrt{\tau_i}), \, \\
+    \mu_i 
+    & = \text{log}(\text{E}[c_i])-\frac{1}{2}log(1+\frac{\text{Var}[c_i]}{\text{E}[c_i]^2}), \\
+    \tau_i^2 
+    & = \text{log}(1+\frac{\text{Var}[c_i]}{\text{E}[c_i]^2}),
+\end{align}
+for all $i=1,\ldots,N$, and parameters $\mu_i$ and $\tau_i^2$.
+Finally, we calculate the log-likelihood value as:
+\begin{align}
+    \mathcal{L} = \sum_{i=1}^N \sum_{j=1}^J \log \left( \psi \left( \tilde{a}_{ij}, \beta_{j0}+\sum_{k=1}^K \gamma_{jk} \, z_{ik},
+    \sigma_{j}^2 \right) \right),
+\end{align}
+where $\psi(\cdot)$ is the probability density function (pdf) of 
+the log-normal distribution. 
+One could conduct a maximum-likelihood estimation by maximising the function $\mathcal{L}$ with respect to the parameters $(\beta_{j0}, \, \gamma_{jk}, \,\sigma_j^2)$. 
+
+\subsection{Allocating Input Use to Production Branches}
+\label{sec:obtaining-output-specific-input-quantities}
+After the estimation, we can use the estimated coefficients, the observed firm characteristics $z_{ik}$, and equation (\ref{eq:omegaExp}) to calculate firm-specific expected values of the input allocation coefficients.
+However, in contrast to the unknown true input allocation coefficients~$a_{ij}$, their expected values $E[a_{ij}]$ will usually violate the accounting identity~(\ref{eq:accountingID}). 
+\\
+A simple way to obtain input allocation coefficients that fulfil the accounting identity is to scale the expected values of the input allocation coefficients proportionally:
+\begin{align}
+\tilde{a}_{ij}=\frac{\text{E}[a_{ij}]\cdot c_i}{\sum_{j'=1}^J 
+\text{E}[a_{ij'}]\cdot x_{ij'}}
+\label{eq:omegaTilde}
+\end{align}
+Using the scaled expected values $(\tilde{a}_{ij})$
+ensures that the accounting identity is always fulfilled:
+\begin{align}
+\sum_{j=1}^J \tilde{a}_{ij} \, x_{ij}
+& = \sum_{j=1}^J 
+    \frac{\text{E}[a_{ij}] \, c_{i} }{ 
+        \sum_{j'=1}^J \text{E}[a_{ij'}] \, x_{ij'} }  \, x_{ij} \\
+& = \frac{ \sum_{j=1}^J \text{E}[a_{ij}]  \, x_{ij} }{ 
+        \sum_{j'=1}^J \text{E}[a_{ij'}] \, x_{ij'} }  \, c_{i} = c_{i}
+\end{align}
+However, the proportional scaling does not take into account that the variances of the input allocation coefficients differ between outputs.
+Hence, it is more appropriate to scale input allocation coefficients with a large variance more (in relative terms) than input allocation coefficients with a small variance.
+Therefore, we use a Maximum-(Posterior?)-Likelihood approach to obtain estimates of output-specific input quantities.
+Given that the input allocation coefficients are assumed to follow a log-normal distribution (equation~\ref{eq:CoeflogNormal}), we can obtain their estimates for each observation~$i$ (separately) in the following way:
+\begin{align}
+    a_{i1}, \ldots, a_{iJ}
+    & = \text{arg max}_{a_{i1}, \ldots, a_{iJ} \geq 0}
+    \sum_{j=1}^J \log \left( \psi \left( a_{ij}, 
+        \beta_{j0}+\sum_{k=1}^K \gamma_{jk} \, z_{ik},
+    \sigma_{j}^2 \right) \right),
+    \label{eq:maxLikOmegaConstrained}\\
+    & \text{ s.t. } 
+    c_{i} = \sum_{j=1}^J a_{ij} \, x_{ij} \nonumber
+\end{align}
+As no analytical solution to this maximisation problem exists, we use numerical opti-
+misation tools for finding the Maximum(-Posterior?)-Likelihood estimates of the input allocation coefficients. Given that constraints $a_{i1},\ldots , a_{iJ} ≥ 0$ and $c_i = \sum_{j=1}^J a_{ij} \, x_{ij}$ can make the numerical optimisation less stable, we transform the constraint optimisation in equation (\ref{eq:maxLikOmegaConstrained} into an unconstrained optimisation:
+\begin{align}
+    \hat{\xi}_{i2}, \ldots, \hat{\xi}_{iJ}
+    & = \text{arg max}_{\xi_{i2}, \ldots, \xi_{iJ} }
+    \sum_{j=1}^J \log \left( \psi \left( 
+        \frac{\exp( \xi_{ij} ) \, c_i }{
+    \sum_{j'=1}^J \exp( \xi_{ij'} ) \, x_{ij'} }, 
+        \beta_{j0}+\sum_{k=1}^K \gamma_{jk} \, z_{ik},
+    \sigma_{j}^2 \right) \right)
+    \label{eq:maxLikOmegaUnconstrained}
+\end{align}
+with the normalisation $\xi_{i1} \equiv 0$ for identification, and where the estimates of the input
+allocation coefficients can then be calculated as:
+\begin{align}
+    a_{ij} = \frac{\exp( \hat{\xi}_{ij} ) \, c_i }{
+    \sum_{j'=1}^J \exp( \hat{\xi}_{ij'} ) \, x_{ij'} }
+    \label{eq:omegaHat}
+\end{align}
+This guarantees that $a_{i1}, \ldots, a_{iJ} \geq 0$ and:
+\begin{align}
+    \sum_{j=1}^J a_{ij} \, x_{ij}
+    & = \sum_{j=1}^J \frac{\exp( \hat{\xi}_{ij} )  \, c_i}{
+    \sum_{j'=1}^J \exp( \hat{\xi}_{ij'} ) \, x_{ij'} } 
+    \, x_{ij}\\
+    & = \frac{ \sum_{j=1}^J \exp( \hat{\xi}_{ij}) \, x_{ij} }{
+    \sum_{j'=1}^J \exp( \hat{\xi}_{ij'} ) \, x_{ij'} } 
+    \, c_i\\
+& = c_i
+\end{align}
+no matter which values we obtain for~$\hat{\xi}_{i2}, \ldots, \hat{\xi}_{iJ}$.
+\\[0.25cm]
+In order to increase the probability 
+that the optimisation algorithm finds the global maximum of the log-likelihood function, we need suitable starting values of the parameters%
+~$\xi_{i2}, \ldots, \xi_{iJ}$.
+A comparison of equations~(\ref{eq:omegaTilde}) and~(\ref{eq:omegaHat}) indicates that the values of~$\exp( \hat{\xi}_{ij} )$ must be proportional to the values of~$E[ a_{ij} ]$.
+As the values of~$\tilde{a}_{ij}$ are also proportional to the values of~$E[ a_{ij} ]$, the values of~$\exp( \hat{\xi}_{ij} )$ are proportional also to the values of~$\tilde{a}_{ij}$:
+\begin{align}
+    \exp( \hat{\xi}_{ij} ) = \rho_i \, \tilde{a}_{ij},
+\end{align}
+where~$\rho_i$ being the coefficient of proportionality.
+As we make the normalisation~$\xi_{i1} \equiv 0$, we obtain~$\rho_i = 1 / \tilde{a}_{i1}$.
+Based on this result, we get~$\exp( \hat{\xi}_{ij} ) = \tilde{a}_{ij} / \tilde{a}_{i1}$
+and, thus, $\hat{\xi}_{ij} = \log( \tilde{a}_{ij} ) 
+- \log ( \tilde{a}_{i1} )$, which we use as starting values for~$\xi_{i2}, \ldots, \xi_{iJ}$.
+
+\section{Assumptions}
+\subsubsection{Assumptions} 
+\label{sec:model_assumptions}
+
+\textbf{Ad 1)}  
+
+
+In estimating the output-specific input cost allocation coefficients, we aim to capture the variation in input costs across farms in order to more accurately model field-level cost structures. 
+The key assumption underlying this approach is that input allocation coefficients are not fixed, but vary according to farm-specific characteristics. 
+In this study, we account for factors such as \textit{soil quality, fertilizer use, area that can be irrigated, farm size, livestock units} (see the $z$ variables in Appendix XX for details). 
+
+
+\textbf{Ad 2)}   
+
+When distributing output-specific input costs from farm to field level, we implicitly assume that costs are allocated proportionally to field area, i.e., in a linear fashion with respect to field size. This is clearly a simplifying assumption, as two fields of the same output type within a farm may differ in characteristics that influence their cost structures, characteristics well known to the farmer but for which no data are available. Such characteristics could have great influence on the cost structure between fields, examples include distance from farm to individual fields (transportation cost), ease of management on individual fields (e.g., number of rocks,  drainage, irregular shapes, field level weed or pest problems or other field level growing conditions) and other field-specific factors. Although, in theory, one could define a set of field characteristics and estimate how elements such as distance to field or field shape affect costs, this is beyond the scope and time frame of this thesis. The field level cost used in this thesis is thus modeled as a farm and output specific average.
+
+(øvrige overvejelser: 1)Bør vi her tage højde for efterafgrøder? og om der evt. høstes flere gange i løbet af et år på nogle marker? 2) Michael indeler både i økologi/konventionel og med husdyrproduktion/uden husdyrproduktion - måske vi også skal gøre det! 3)
+
+\textbf{Ad 3)}
+
+When distributing output-specific gross yields from farm to field level, we again implicitly assume that yields are allocated proportionally to field area (i.e., linearly with respect to field size). In reality, yields can vary substantially between fields of the same crop within a farm due to differences in soil type, soil depth and structure, distance to groundwater, topography etc. Within the scope of this thesis we do not account for this. 
+
+
+
+
+Øvrige overvejelser fordeling af udbytte: 
+
+
+\begin{itemize}
+     \item[] 1.	Skal vi tage højde for randzoner? dvs. små marker får en mindre andel af udbyttet - grundet større randzonefradrag og omvendt for store marker inden for en given bedrift - vi kan måske anvende Michaels fremgangsmåde.
+    \end{itemize}
+\begin{itemize}
+     \item[] 2.	 Undersøg om vi i data har marker med 2 * udbytte = høstes to gange? og hvordan vi håndterer halm/kornudbytte fra samme mark - halmudbytte skal vel fordeles mellem alle halmproducerennde marker, mens kornudbyttet er specifikt (hvede/byg etc.).
+    \end{itemize}
+
+\newpage
+
+
+\subsection{Estimating Output-Specific Input Use}
+\label{sec:method-serie-b}
+This method is developed by \cite{henningsen2026}.
+
+We cannot calculate a log-likelihood value based on the distributions defined in (\ref{eq:CoeflogNormal}), because the input-output coefficients are unknown.
+Therefore, it seems reasonable to find an approximate distribution of $x_i$, i.e. the sum of log-normal distributions.
+To emphasize this we will use the capital letter $x_i$ in the following, stipulating the probabilistic model to be given as log-normal distributions of $X_i$.
+
+Given the unknown parameters and the observed firm characteristics, we calculate the expected values and  variances of the input-output coefficients as:
+\begin{align}
+    \text{E}[a_{ij}]
+    & =\exp (\beta_j+\sum_{m=1}^M \gamma_{jm} \, z_{im} +        
+    0.5\cdot \sigma_{j}^2) 
+    \label{eq:omegaExp} \\
+    \text{Var}[a_{ij}]
+    & =(\exp(\sigma_{j}^2)-1) \cdot \exp(2\cdot\beta_j +
+    2\cdot\sum_{k=1}^K\gamma_{jm} \, z_{ik}+\sigma_{j}^2)
+    \label{eq:omegaVar}
+\end{align}
+for all $i=1,\ldots,N$ and $j=1,\ldots,J$. 
+Combining (\ref{eq:accountingID}) with (\ref{eq:omegaExp})-(\ref{eq:omegaVar}), the expected total cost and variances are calculated by:
+\begin{align}
+    \text{E}[x_i]
+    & = \sum_{j=1}^J \text{E}[a_{ij}] \cdot A_{ij} \\
+    & = \sum_{j=1}^J \exp (\beta_j +\sum_{m=1}^M \gamma_{jm} \, z_{im} + 0.5\cdot \sigma_{j}^2) \cdot A_{ij}
+    \label{eq:yExp} \\
+    \text{Var}[x_i]
+    & = \sum_{j=1}^J \text{Var}[a_{ij}] \cdot A_{ij} \\
+    & = \sum_{j=1}^J (\exp(\sigma_{j}^2)-1) \cdot \exp(2\cdot\beta_j + 2\cdot\sum_{k=1}^K\gamma_{jm} \, z_{ik}+\sigma_{j}^2) \cdot A_{ij}
+    \label{eq:yVar} 
+\end{align}
+for all $i=1,...,N$ and $j=1,...,J.$ 
+This gives an approximate log-normal distribution of $X_i$:
+\begin{align}
+    X_i 
+    & \sim \text{lognormal} (\mu_i,\sqrt{\tau_i}), \, \\
+    \mu_i 
+    & = \text{log}(\text{E}[x_i])-\frac{1}{2}log(1+\frac{\text{Var}[x_i]}{\text{E}[x_i]^2}), \\
+    \tau_i^2 
+    & = \text{log}(1+\frac{\text{Var}[x_i]}{\text{E}[x_i]^2}),
+    \label{eq:yMu&yTau}
+\end{align}
+for all $i=1,\ldots,N$, and parameters $\mu_i$ and $\tau_i^2$.
+Finally, we calculate the log-likelihood value as:
+\begin{align}
+    \mathcal{L} = \sum_{i=1}^N \sum_{j=1}^J \log \left( \psi \left( \tilde{a}_{ij}, \beta_j+\sum_{m=1}^M \gamma_{jm} \, z_{im},
+    \sigma_{j}^2 \right) \right),
+\end{align}
+where $\psi(\cdot)$ is the probability density function (pdf) of 
+the log-normal distribution. 
+One could conduct a maximum-likelihood estimation by maximising the function $\mathcal{L}$ with respect to the parameters $(\beta_j, \, \gamma_{jm}, \,\sigma_j^2)$. 
+
+\subsubsection{Allocating Input Use to Production Branches}
+\label{sec:maximum-likelihood-approach}
+Given that the input-output coefficients are assumed to follow a log-normal distribution (equation~\ref{eq:CoeflogNormal}), we can obtain their estimates for each observation~$i$ (separately) in the following way:
+\begin{align}
+    a_{i1}, \ldots, a_{iJ}
+    & = \text{arg max}_{a_{i1}, \ldots, a_{iJ} \geq 0}
+    \sum_{j=1}^J \log \left( \psi \left( a_{ij}, 
+        \beta_j+\sum_{m=1}^M \gamma_{jm} \, z_{im},
+    \sigma_{j}^2 \right) \right),
+    \label{eq:maxLikOmegaConstrained}\\
+    & \text{ s.t. } 
+    x_i = \sum_{j=1}^J a_{ij} \, A_{ij} \nonumber
+\end{align}
+As no analytical solution to this maximisation problem exists, we use numerical optimisation tools for finding the Maximum-Likelihood estimates of the input-output coefficients. 
+Given that constraints $a_{i1},\ldots , a_{iJ} \geq 0$ and $x_i = \sum_{j=1}^J a_{ij} \, A_{ij}$ can make the numerical optimisation less stable, we transform the constraint optimisation in equation (\ref{eq:maxLikOmegaConstrained}) into an unconstrained optimisation:
+\begin{align}
+    \hat{\xi}_{i2}, \ldots, \hat{\xi}_{iJ}
+    & = \text{arg max}_{\xi_{i2}, \ldots, \xi_{iJ} }
+    \sum_{j=1}^J \log \left( \psi \left( 
+        \frac{\exp( \xi_{ij} ) \, x_i }{
+    \sum_{j'=1}^J \exp( \xi_{ij'} ) \, A_{ij'} }, 
+        \beta_j+\sum_{m=1}^M \gamma_{jm} \, z_{im},
+    \sigma_{j}^2 \right) \right)
+    \label{eq:maxLikOmegaUnconstrained}
+\end{align}
+with the normalisation $\xi_{i1} \equiv 0$ for identification, and where the estimates of the input
+allocation coefficients can then be calculated as:
+\begin{align}
+    a_{ij} = \frac{\exp( \hat{\xi}_{ij} ) \, x_i }{
+    \sum_{j'=1}^J \exp( \hat{\xi}_{ij'} ) \, A_{ij'} }
+    \label{eq:omegaHat}
+\end{align}
+This guarantees that $a_{i1}, \ldots, a_{iJ} \geq 0$ and:
+\begin{align}
+    \sum_{j=1}^J a_{ij} \, A_{ij}
+    & = \sum_{j=1}^J \frac{\exp( \hat{\xi}_{ij} )  \, x_i}{
+    \sum_{j'=1}^J \exp( \hat{\xi}_{ij'} ) \, A_{ij'} } 
+    \, A_{ij}\\
+    & = \frac{ \sum_{j=1}^J \exp( \hat{\xi}_{ij}) \, A_{ij} }{
+    \sum_{j'=1}^J \exp( \hat{\xi}_{ij'} ) \, A_{ij'} } 
+    \, x_i\\
+& = x_i
+\end{align}
+no matter which values we obtain for~$\hat{\xi}_{i2}, \ldots, \hat{\xi}_{iJ}$.
+\\[0.25cm]
+In order to increase the probability 
+that the optimisation algorithm finds the global maximum of the log-likelihood function, we need suitable starting values of the parameters%
+~$\xi_{i2}, \ldots, \xi_{iJ}$.
+The the values of~$\exp( \hat{\xi}_{ij} )$ must be proportional to the values of~$E[ a_{ij} ]$.
+As the values of~$\tilde{a}_{ij}$ are also proportional to the values of~$E[ a_{ij} ]$, the values of~$\exp( \hat{\xi}_{ij} )$ are proportional also to the values of~$\tilde{a}_{ij}$:
+\begin{align}
+    \exp( \hat{\xi}_{ij} ) = \eta_i \, \tilde{a}_{ij},
+\end{align}
+where~$\eta_i$ being the coefficient of proportionality.
+As we make the normalisation~$\xi_{i1} \equiv 0$, we obtain~$\eta_i = 1 / \tilde{a}_{i1}$.
+Based on this result, we get~$\exp( \hat{\xi}_{ij} ) = \tilde{a}_{ij} / \tilde{a}_{i1}$
+and, thus, $\hat{\xi}_{ij} = \log( \tilde{a}_{ij} ) 
+- \log ( \tilde{a}_{i1} )$, which we use as starting values for~$\xi_{i2}, \ldots, \xi_{iJ}$.
+
+
+
+\newpage
+
+\bibliographystyle{apalike}
+\bibliography{references}
+
+\end{document}

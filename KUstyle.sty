@@ -1,0 +1,65 @@
+\ProvidesPackage{KUstyle}
+
+\RequirePackage{eso-pic}
+\RequirePackage{graphicx}
+\RequirePackage[absolute]{textpos}
+\RequirePackage{hyperref}
+
+\definecolor{KUrod}{RGB}{144,26,30}
+
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+\newcommand*{\advisor}[1]{\def\@advisor{#1}}
+\newcommand*{\ptype}[1]{\def\@ptype{#1}}
+\newcommand*{\subtitle}[1]{\def\@subtitle{#1}}
+\newcommand*{\fpimage}[1]{\def\@fpimage{#1}}
+
+\def\maketitle{
+    \thispagestyle{empty}
+    \AddToShipoutPictureBG*{\includegraphics[width=\paperwidth,height=\paperheight]{ku-logo.pdf}}
+    \ 
+    
+    \ifdefined\@fpimage
+        \begin{textblock}{10}(1.5,4.7)
+        \noindent\includegraphics*[width=\textwidth, height=80mm, keepaspectratio]{\@fpimage}
+        \end{textblock}
+    \fi
+    
+    \begin{textblock}{10}(1.5,4.5) \noindent\fontsize{15}{15}\selectfont \textbf{\@ptype}
+    \end{textblock}
+    
+    \ifdefined\@subtitle
+        \begin{textblock}{10}(1.5,13.0) \noindent\fontsize{14}{14}\selectfont \@author
+        \end{textblock}
+    \fi
+
+    \ifdefined\@ptype
+        \begin{textblock}{13}(1.5,5.5)
+        \noindent\fontsize{21}{21}\selectfont \textbf{\@title}
+        \end{textblock}
+    \fi
+    
+    \begin{textblock}{10}(1.5,12.5)
+        \noindent\fontsize{14}{14}\selectfont \@subtitle
+    \end{textblock}
+    
+    \begin{textblock}{10}(1.5,13.7)
+    \noindent\fontsize{11}{11}\selectfont 
+    \textbf{\@date}
+    \end{textblock}
+    
+    \ifdefined\@advisor
+        \begin{textblock}{10}(1.5,14.2)
+        \noindent\fontsize{11}{11}\selectfont \textbf{\@advisor}
+        \end{textblock}
+    \fi
+    
+    \newpage
+    \noindent
+}

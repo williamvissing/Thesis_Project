@@ -1,0 +1,255 @@
+\documentclass[12pt]{article}
+\usepackage{KUstyle}
+\usepackage[margin=0.8in]{geometry} 
+\usepackage{setspace} 
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{tabularx} 
+\usepackage{booktabs}
+\usepackage{adjustbox}
+\usepackage{longtable}
+\usepackage{pdflscape}
+\usepackage{threeparttable} 
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{natbib}
+\usepackage{amsfonts}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\setlist[itemize,1]{label=\textcolor{black}{\tiny $\bullet$}}
+\setlist[itemize,2]{label=\textcolor{black}{\tiny $\bullet$}}
+\setlist[itemize,3]{label=\textcolor{black}{\tiny $\bullet$}}
+\usepackage{fix-cm}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\onehalfspacing
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+\title{\textbf{Sections for print}}
+
+\begin{document}
+ 
+\section{Field-Level Damage Cost under Winter Wheat Reference Scenario} 
+
+\subsubsection{Damage Costs under the Winter Wheat Reference Scenario} 
+
+This section presents damage costs from nitrogen under the winter wheat reference scenario for all fields in the dataset. Damage costs translate field-level nitrogen losses to coastal waters into monetary terms, representing the environmental externality component of societal profitability. Results are reported for both uniform and specific damage cost estimates. The uniform approach covers all 8,377 fields across 11 catchments, while the specific approach is limited to the 4,323 fields in the 6 catchments for which location-specific damage cost estimates are available. As discussed in Section~\ref{X}, the two measures are not directly comparable --- specific costs reflect location-specific downstream environmental conditions, while uniform costs apply a common EU average value derived from ENA. Reported together, however, they allow for an assessment of how sensitive the spatial distribution of damage costs is to the choice of valuation approach.
+
+\subsubsection{Spatial Variation in Damage Costs} 
+
+Table~\ref{tab:damage_costs_all} reports area-weighted average damage costs per hectare per year across catchments under the winter wheat reference scenario. Estimated damage costs vary substantially across catchments. For uniform costs, this variation reflects differences in nitrogen leaching potential and retention across locations. For specific costs, variation additionally reflects differences in the catchment specific marginal damage cost of nitrogen reaching coastal waters.
+
+
+
+\begin{table}[H]
+\centering
+\small
+\caption{Area-weighted average damage cost in DKK/ha/y }
+\label{tab:damage_costs_all}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Catchment} & \textbf{Winter Wheat (Specific)} & \textbf{Winter Wheat (Uniform)} \\
+\midrule
+Horsens Fjord, indre          & 1,719.4 & 2,175.0 \\
+Isefjord, indre               & 1,010.2 & 1,618.3 \\
+Karrebæk Fjord                & ---     & 1,583.2 \\
+Lister Dyb                    & ---     & 1,147.4 \\
+Nibe Bredning og Langerak     & ---     & 2,516.0 \\
+Nissum Bredning               & ---     & 1,980.5 \\
+Nissum Fjord, Felsted Kog     & 214.3   & 1,986.0 \\
+Odense Fjord, Seden Strand    & 734.8   & 1,853.4 \\
+Randers Fjord, indre          & 319.1   & 1,616.1 \\
+Roskilde Fjord, indre         & 685.7   & 1,023.8 \\
+Thisted Bredning              & ---     & 2,657.3 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item \textit{Notes:} All values are measured in DKK per hectare per year, weighted by 
+area. Specific refers to location-specific damage costs; Uniform refers to the EU 
+average damage cost. `---' indicates that specific damage cost estimates are 
+unavailable for this catchment.
+\end{tablenotes}
+\end{table}
+
+
+Under the uniform cost approach, area-weighted average damage costs range from approximately 1,024 DKK/ha/y in Roskilde Fjord to 2,657 DKK/ha/y in Thisted Bredning. Since all fields are assigned the same damage cost of 130.76 DKK/kg N reaching coastal waters --- regardless of location, this variation reflects differences in nitrogen leaching and retention across catchments only.
+
+Under the specific cost approach, available for a subset of catchments, the range 
+spans from 214 DKK/ha/y in Nissum Fjord to 1,719 DKK/ha/y in Horsens Fjord. The 
+location-specific damage cost values underlying these estimates vary substantially 
+--- from 11.99 DKK/kg N in Nissum Fjord to 87.80 DKK/kg N in Horsens Fjord 
+(Table~\ref{tab:damage-costs}) --- reflecting differences in the marginal 
+environmental value of nitrogen reductions across receiving coastal waters.
+
+The relative ranking of catchments differs between the two approaches. Horsens Fjord 
+ranks highest under both, consistent with its relatively high location-specific damage cost value of 87.80 DKK/kg N. 
+Nissum Fjord and Randers Fjord, however, rank considerably lower under the specific 
+approach, reflecting their low location-specific damage values of 11.99 and 21.93 
+DKK/kg N respectively --- well below the uniform estimate. This divergence illustrates 
+that the choice of valuation approach can materially affect which catchments are 
+identified as priorities for intervention.
+
+
+
+\subsubsection{Distribution of Damage Costs across Fields} 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/hist_DC_spec_all.jpg}
+\caption{Distribution Specific Damage Cost kr/ha/y}
+\label{fig:hist_DC_spec_all}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/hist_DC_uni_all.jpg}
+\caption{Distribution Uniform Damage Cost kr/ha/y}
+\label{fig:hist_DC_uni_all}
+\end{figure}
+
+Figures~\ref{fig:hist_DC_spec_all} and~\ref{fig:hist_DC_uni_all} illustrate the distribution 
+of estimated damage costs per hectare per year across fields within each catchment. 
+The uniform approach covers all 11 catchments, while the specific approach is limited 
+to the 6 catchments for which location-specific damage cost estimates are available. For these 6 catchments, the shape of the distributions 
+is identical across the two approaches --- since all fields within a catchment are 
+multiplied by the same damage cost per kg N reaching coastal waters, only the scale differs.
+
+
+
+%Some atchments --- notably Nissum Fjord, Lister Dyb and Randers Fjord under the uniform approach, and Nissum Fjord under the specific approach --- display pronounced right-skewness, with a large share of fields concentrated at low damage costs and a long upper tail of high-cost fields. Others, such as Nibe Bredning og Langerak and Horsens Fjord, display more symmetric, bell-shaped distributions where damage costs are more evenly spread across fields. Thisted Bredning stands out with a notably flat and wide distribution, suggesting substantial heterogeneity in nitrogen loads across fields within this catchment.
+
+The distributions vary considerably across catchments in both shape and spread. However, regardless of distributional shape, all catchments contain a subset of fields with substantially higher damage costs than the catchment average. It is precisely these fields that motivate spatially differentiated targeting --- they impose a disproportionately large environmental burden on receiving water bodies and would be indistinguishable from low damage cost fields under a spatially undifferentiated regulatory approach such as a uniform area-based scheme.
+
+The figures clearly show, that across catchments, the two approaches can produce 
+different relative rankings, as a field in a catchment with a high specific damage 
+value will rank higher relative to fields in other catchments under the specific 
+approach than under the uniform approach. 
+
+%This is reflected in an overall cross-field correlation of 0.67 between the two estimates.
+
+Figures ~\ref{fig:hist_DC_uni_allfields} and ~\ref{fig:hist_DC_spec_allfields} show the distribution of uniform and specific damage costs across all fields.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/hist_DC_uni_allfields.jpg}
+\caption{Distribution Uniform Damage Cost DKK/ha/y }
+\label{fig:hist_DC_uni_allfields}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/hist_DC_spec_allfields.jpg}
+\caption{Distribution Specific Damage Cost DKK/ha/y}
+\label{fig:hist_DC_spec_allfields}
+\end{figure}
+
+Figures~\ref{fig:hist_DC_spec_allfields} and~\ref{fig:hist_DC_uni_allfields} display the distribution of damage cost (DKK/ha/y) for all fields in the dataset.
+
+
+
+\subsubsection{Sensitivity Analysis: Spring Barley with Catch Crop}
+
+\begin{table}[H]
+\centering
+\small
+\caption{Area-weighted average damage cost in DKK/ha/y: Winter Wheat vs Spring Barley 
+Leaching Reference}
+\label{tab:sensitivity_all}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lcccc}
+\toprule
+& \multicolumn{2}{c}{\textbf{Specific Damage Cost (DKK/ha/y)}} 
+& \multicolumn{2}{c}{\textbf{Uniform Damage Cost (DKK/ha/y)}} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5}
+\textbf{Catchment} & \textbf{Winter Wheat} & \textbf{Spring Barley} & \textbf{Winter Wheat} & \textbf{Spring Barley} \\
+& & \textbf{w. Catch Crop} & & \textbf{w. Catch Crop} \\
+\midrule
+Horsens Fjord, indre          & 1,719.4 & 867.5  & 2,175.0 & 1,097.4 \\
+Isefjord, indre               & 1,010.2 & 594.8  & 1,618.3 &   952.8 \\
+Karrebæk Fjord                & ---     & ---    & 1,583.2 &   963.4 \\
+Lister Dyb                    & ---     & ---    & 1,147.4 &   569.0 \\
+Nibe Bredning og Langerak     & ---     & ---    & 2,516.0 & 1,204.2 \\
+Nissum Bredning               & ---     & ---    & 1,980.5 &   931.8 \\
+Nissum Fjord, Felsted Kog     & 214.3   & 106.6  & 1,986.0 &   987.5 \\
+Odense Fjord, Seden Strand    & 734.8   & 400.3  & 1,853.4 & 1,009.8 \\
+Randers Fjord, indre          & 319.1   & 155.8  & 1,616.1 &   789.3 \\
+Roskilde Fjord, indre         & 685.7   & 453.9  & 1,023.8 &   677.7 \\
+Thisted Bredning              & ---     & ---    & 2,657.3 & 1,255.7 \\
+\bottomrule
+\end{tabular}%
+}
+\begin{tablenotes}
+\footnotesize
+\item \textit{Notes:} All values measured in DKK per hectare per year, weighted by 
+area. Specific refers to location-specific damage costs; Uniform refers to the EU 
+average damage cost of 130.76 DKK/kg N. `---' indicates that specific damage cost 
+estimates are unavailable for this catchment.
+\end{tablenotes}
+\end{table}
+
+Table~\ref{tab:sensitivity_all} compares area-weighted average damage costs per hectare per year under the winter wheat reference scenario and an alternative scenario based on spring barley with a catch crop, for both specific and uniform valuation approaches. The purpose is to assess whether the spatial patterns in damage costs identified in the preceding sections are robust to the choice of reference crop.
+As expected, damage costs are substantially lower under the spring barley with catch crop scenario across all catchments and both valuation approaches. The reduction reflects the nitrogen-binding effect of the catch crop, which reduces leaching from the root zone and consequently lowers nitrogen loads to coastal waters. Under the uniform approach, damage costs fall by approximately 50 percent across most catchments — from a range of 1,013–-2,690 kr/ha/y under winter wheat to 588–-1,278 kr/ha/y under spring barley with catch crop. A similar proportional reduction is observed under the specific approach, where costs fall from a range of 211–-1,685 kr/ha/y to 105–-850 kr/ha/y.
+Importantly, the relative ranking of catchments is largely preserved across the two scenarios. Horsens Fjord consistently displays the highest specific damage costs under both reference crops, while Nissum Fjord and Randers Fjord remain at the lower end. Under the uniform approach, Thisted Bredning and Nibe Bredning og Langerak retain their position at the top of the distribution regardless of reference crop. This suggests that the spatial patterns in damage costs are driven primarily by underlying biophysical characteristics — soil type, retention capacity, and proximity to vulnerable water bodies — rather than by the specific cropping assumption. The reference scenario therefore appears robust as a basis for spatial targeting, even if the absolute level of damage costs is sensitive to crop choice.
+
+Taken together, the results in this section suggest two findings. First, nitrogen damage costs vary substantially across catchments and fields, reflecting differences in leaching potential and retention capacity. While the choice of valuation approach affects the absolute level of damage costs and the relative ranking of fields across catchments, the spatial structure within catchments is determined solely by biophysical conditions. Second, the spatial patterns across catchments appear robust to the choice of reference crop, as the relative ranking of catchments is preserved across both scenarios examined. It should however be noted that the two reference scenarios are not equally spatially detailled (refer to xx)
+
+
+
+%\subsubsection{Distribution of Damage Costs across Farms} Dette afsnit kan vi overveje at tage med ser på om den høje damage cost er koncentreret på få bedrifter eller spredt bredt. [Histogram over gennemsnitlig damage cost pr ha pr y pr. CVR for uniform og specific] Den centrale pointe er politisk: hvis få bedrifter står for en uforholdsmæssigt stor del af den samfundsøkonomiske belastning, er målrettet regulering på bedriftsniveau potentielt meget cost-effective. Hvis belastningen er bredt fordelt er en mere generel regulering nødvendig.
+
+
+\subsubsection{Crop Choice and Damage Cost Distribution}
+
+\begin{table}[H]
+\centering
+\small
+\caption{Area-weighted average damage cost in DKK/ha/y by crop type actually 
+cultivated, under the winter wheat reference scenario.}
+\label{tab:dc_crop_short}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lcccccc}
+\toprule
+& \multicolumn{3}{c}{\textbf{Uniform Damage Cost (DKK/ha/y)}} 
+& \multicolumn{3}{c}{\textbf{Specific Damage Cost (DKK/ha/y)}} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7}
+\textbf{Catchment} & \textbf{W. Wheat} & \textbf{S. Barley} & \textbf{Roughage} 
+                   & \textbf{W. Wheat} & \textbf{S. Barley} & \textbf{Roughage} \\
+\midrule
+Horsens Fjord, indre         & 2,087.7 & 2,266.9 & 3,016.7 & 1,650.3 & 1,792.0 & 2,384.8 \\
+Isefjord, indre              & 1,536.9 & 1,887.4 & 1,951.3 &   959.4 & 1,178.2 & 1,218.1 \\
+Karrebæk Fjord               & 1,602.7 & 1,619.7 & 1,700.9 & ---     & ---     & ---     \\
+Lister Dyb                   & 1,170.6 & 1,388.8 &   755.9 & ---     & ---     & ---     \\
+Nibe Bredning og Langerak    & 2,643.3 & 2,585.3 & 2,480.7 & ---     & ---     & ---     \\
+Nissum Bredning              & 1,992.3 & 2,006.2 & 2,056.2 & ---     & ---     & ---     \\
+Nissum Fjord, Felsted Kog    & 2,885.3 & 1,790.9 & 2,733.3 &   311.3 &   193.3 &   294.9 \\
+Odense Fjord, Seden Strand   & 1,955.9 & 1,692.6 & 2,104.4 &   775.4 &   671.1 &   834.3 \\
+Randers Fjord, indre         & 1,724.6 & 1,677.8 & 1,467.9 &   340.5 &   331.2 &   289.8 \\
+Roskilde Fjord, indre        &   981.8 & 1,006.6 & 1,216.8 &   657.6 &   674.3 &   815.0 \\
+Thisted Bredning             & 2,504.9 & 2,982.9 & 2,108.2 & ---     & ---     & ---     \\
+\bottomrule
+\end{tabular}%
+}
+
+\begin{tablenotes}
+\footnotesize
+\item \textit{Notes:} All values measured in DKK per hectare per year, weighted by 
+area. Each column shows damage costs for fields where the respective crop was actually 
+cultivated in 2024, evaluated under the winter wheat reference scenario. `---' indicates 
+that specific damage cost estimates are unavailable for this catchment. 
+W.~Wheat = Winter Wheat; S.~Barley = Spring Barley.
+\end{tablenotes}
+\end{table}
+
+Table~\ref{tab:dc_crop_short} presents area-weighted average damage costs under the winter wheat reference scenario for fields cultivated with winter wheat, spring barley, and roughage respectively. The full table covering all crop categories is provided in Appendix~\ref{app:X} (Tables~\ref{tab:dc_crop_uniform_full} and~\ref{tab:dc_crop_specific_full}).
+
+The results reveal no consistent pattern in damage costs across crop categories — with the notable exception of roughage. Roughage fields — which also encompass permanent grass and other extensively managed crop types — consistently display the highest damage costs under the winter wheat reference scenario across virtually all catchments. This pattern likely reflects a tendency to locate extensive crop types on environmentally sensitive land, which is not unexpected given the nature of these land uses. For all remaining crop categories, however, no systematic ranking is discernible. Spring barley fields display higher damage costs than winter wheat fields in some catchments and lower in others, with no consistent direction across catchments or valuation approaches. This absence of systematic sorting is confirmed by the full crop category tables in Appendix~\ref{app:X} (Tables~\ref{tab:dc_crop_uniform_full} and~\ref{tab:dc_crop_specific_full}).
+This finding supports the use of a standardised reference scenario. If farmers systematically allocated specific crops to fields based on their environmental burden potential, the observed crop distribution would introduce a systematic bias into the damage cost estimates. The absence of such sorting — across both similar crops such as winter wheat and spring barley, and more distinct crops covered in the appendix — suggests that the spatial distribution of damage costs under the reference scenario reflects underlying biophysical characteristics of fields rather than endogenous crop allocation decisions. It should be noted, however, that this analysis only examines systematic sorting with respect to crop choice. Other dimensions of farm management — such as the use of catch crops, fertilisation intensity, or drainage investments — may exhibit spatial patterns that are not captured here.
+
+The absence of systematic sorting between crops we argue supports the use of a standardised reference scenario: since farmers do not appear to systematically allocate cereals to fields based on their environmental burden potential, a uniform reference crop provides a more comparable and robust basis for assessing leaching potential than the observed crop distribution would.
+
+\bibliographystyle{apalike}
+\bibliography{references}
+
+\end{document}

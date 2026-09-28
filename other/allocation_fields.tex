@@ -1,0 +1,349 @@
+\documentclass{article}
+\usepackage{amsmath}
+
+\begin{document}
+
+\section{Allocating Gross Yields from Farm to Field Level} 
+
+
+To allocate observed gross yields from farm to field level, a structural allocation model is applied, where gross yields for each farm and production branch is distributed across the corresponding fields. The approach is based on field size and soil type, which are assumed to drive heterogeneity in productivity within the same production branch.
+
+\subsection{Model Specification – Soil Type Effects}
+
+First, soil type effects are estimated across farms within each production branch. Let $u_{ij}$ denote gross yields for farm $i$ and production branch $j$, and let $A_{ij}$ denote the total area allocated to that production branch on farm $i$. The average yield per hectare is defined as:
+\[
+\frac{u_{ij}}{A_{ij}}
+\]
+
+The soil composition of farm $i$ within production branch $j$ is described by shares $\text{share}_{ijs}$, where $s$ indexes soil types. Soil type effects are estimated using the following log-linear model:
+\[
+\log\left(\frac{u_{ij}}{A_{ij}}\right)
+=
+\beta_j
++
+\sum_{s \neq s_0} \tau_{js} \cdot \text{share}_{ijs}
++
+\varepsilon_{ij}
+\]
+
+where $s_0$ denotes the reference soil type. The estimated parameters $\hat{\tau}_{js}$ are interpreted as relative productivity effects of soil types within the given production branch and represents averages across all farms in the dataset (bør vi tage højde for lokation her, vi kunne måske inkludere fixed effects for vandoplande el. lign.?).
+
+\vspace{0.5cm}
+
+\textbf{Construction of yield index}
+
+For each field $f$ with soil type $s(f)$, a yield index is defined as:
+\[
+\theta_{fj} = \exp\left( \hat{\tau}_{j, s(f)} \right)
+\]
+
+\vspace{0.5cm}
+
+\textbf{Allocation of Gross Yields to Fields}
+
+Total farm-level gross yields are allocated to fields proportionally to field size and the soil-specific yield index. The allocated gross yield for field $f$ on farm $i$ and production branch $j$ is given by:
+\[
+\hat{y}_{ifj}
+=
+y_{ij}
+\cdot
+\frac{A_{ifj} \cdot \theta_{fj}}
+{\sum_{f' \in i} A_{if'j} \cdot \theta_{f'j}}
+\]
+
+where $A_{ifj}$ denotes the area of field $f$ (imk\_areal), and $\theta_{fj}$ is the soil-specific yield index for field $f$. The denominator represents the total effective production capacity of farm $i$ for production branch $j$, defined as area weighted by soil quality.
+
+\vspace{0.5cm}
+
+\textbf{Interpretation}
+
+This specification ensures that 
+\[
+\sum_{f \in i} \hat{y}_{ifj} = y_{ij}
+\]
+and that variation in yields at the field level is driven by observed field size and estimated soil heterogeneity. Soil type effects are identified across farms.
+
+Farm-level heterogeneity is already captured in the observed gross yields $y_{ij}$. The model therefore only decomposes these gross yields to the field level based on the structural assumption that variation in soil types reflects systematic differences in yields within the same production branch. 
+
+\section{Allocating Gross Yields from Farm to Field Level} 
+
+To allocate observed gross yields from farm to field level, a structural allocation model is applied, where gross yields for each farm and production branch is distributed across the corresponding fields. The approach is based on field size and soil type, which are assumed to drive heterogeneity in productivity within the same production branch.
+
+\subsection{Model Specification – Soil Type Effects}
+
+First, soil type effects are estimated across farms within each production branch. Let $u_{ij}$ denote gross yields for farm $i$ and production branch $j$, and let $A_{ij}$ denote the total area allocated to that production branch on farm $i$. The average yield per hectare is defined as:
+\[
+\frac{u_{ij}}{A_{ij}}
+\]
+
+The soil composition of farm $i$ within production branch $j$ is described by shares $\text{share}_{ijs}$, where $s$ indexes soil types. Soil type effects are estimated using the following log-linear model:
+\[
+\log\left(\frac{u_{ij}}{A_{ij}}\right)
+=
+\beta_j
++
+\sum_{s \neq s_0} \tau_{js} \cdot \text{share}_{ijs}
++
+\varepsilon_{ij}
+\]
+
+where $s_0$ denotes the reference soil type. The estimated parameters $\hat{\tau}_{js}$ are interpreted as relative productivity effects of soil types within the given production branch and represents averages across all farms in the dataset (bør vi tage højde for lokation her, vi kunne måske inkludere fixed effects for vandoplande el. lign.?).
+
+\vspace{0.5cm}
+
+\textbf{Construction of yield index}
+
+For each field $f$ with soil type $s(f)$, a yield index is defined as:
+\[
+\theta_{fj} = \exp\left( \hat{\tau}_{j, s(f)} \right)
+\]
+
+\vspace{0.5cm}
+
+\textbf{Allocation of Gross Yields to Fields}
+
+Total farm-level gross yields are allocated to fields proportionally to field size and the soil-specific yield index. The allocated gross yield for field $f$ on farm $i$ and production branch $j$ is given by:
+\[
+\hat{y}_{ifj}
+=
+y_{ij}
+\cdot
+\frac{A_{ifj} \cdot \theta_{fj}}
+{\sum_{f' \in i} A_{if'j} \cdot \theta_{f'j}}
+\]
+
+where $A_{ifj}$ denotes the area of field $f$ (imk\_areal), and $\theta_{fj}$ is the soil-specific yield index for field $f$. The denominator represents the total effective production capacity of farm $i$ for production branch $j$, defined as area weighted by soil quality.
+
+\vspace{0.5cm}
+
+\textbf{Interpretation}
+
+This specification ensures that 
+\[
+\sum_{f \in i} \hat{y}_{ifj} = y_{ij}
+\]
+and that variation in yields at the field level is driven by observed field size and estimated soil heterogeneity. Soil type effects are identified across farms.
+
+Farm-level heterogeneity is already captured in the observed gross yields $y_{ij}$. The model therefore only decomposes these gross yields to the field level based on the structural assumption that variation in soil types reflects systematic differences in yields within the same production branch. 
+
+
+start
+
+
+
+
+
+
+
+
+
+
+\section{Allocating Gross Yields from Farm to Field Level Version II} 
+
+
+To allocate observed gross yields from farm to field level, a structural allocation model is applied in which gross yields for each farm and crop category are distributed across the corresponding fields. The approach is based on field size and soil type, which are assumed to be the main drivers of heterogeneity in productivity within crop categories. 
+
+\subsection{Model Specification – Soil Type Effects}
+
+First, soil type effects are estimated across farms within each crop category. Let $y_{iu}$ denote total gross yield for farm $i$ and crop category $u$, and let $A_{iu}$ denote the corresponding total area. The average yield per hectare is defined as:
+\[
+\frac{y_{iu}}{A_{iu}}.
+\]
+
+The soil composition of farm $i$ is described by shares $\text{share}_{ius}^{(k)}$, where $s$ indexes soil types and $k$ indexes sub-categories. For barley, for example, we distinguish between spring and winter barley, such that $k \in \{\text{spring},\text{winter}\}$.
+
+Soil type effects are estimated using the following log-linear model:
+\[
+\log\!\left(\frac{y_{iu}}{A_{iu}}\right)
+=
+\beta_u
++
+\alpha_{c(i)}
++
+\sum_{s=2}^{6}
+\left[
+\tau_{us} \cdot \text{share}_{ius}^{(\text{spring})}
++
+\upsilon_{us} \cdot \text{share}_{ius}^{(\text{winter})}
+\right]
++
+\varepsilon_{iu}.
+\]
+
+where $\alpha_{c(i)}$ are catchment fixed effects, with $c(i) \in \{1,\dots,11\}$ denoting the catchment to which farm $i$ belongs. Identification of soil type effects thus relies on variation in soil composition across farms within the same catchment.
+
+Total area is given by:
+\[
+A_{iu}
+=
+\sum_{s=1}^{6}
+\left(
+A_{ius}^{(\text{spring})}
++
+A_{ius}^{(\text{winter})}
+\right),
+\]
+
+and shares are defined as:
+\[
+\text{share}_{ius}^{(\text{spring})}
+=
+\frac{A_{ius}^{(\text{spring})}}{A_{iu}},
+\qquad
+\text{share}_{ius}^{(\text{winter})}
+=
+\frac{A_{ius}^{(\text{winter})}}{A_{iu}}.
+\]
+
+The reference category ($s=1$) is clay soil (JB 5--6). By construction, shares sum to one across soil types and sub-categories.
+
+The estimated parameters $\hat{\tau}_{us}$ and $\hat{\upsilon}_{us}$ are interpreted as relative productivity effects of soil types for spring and winter sub-categories respectively, measured with respect to the reference category and conditional on catchment.
+
+\vspace{0.5cm}
+
+\textbf{Construction of Yield Index}
+
+For each field $f$ with soil type $s(f)$ and crop sub-category $k(f)$, a yield index is defined as:
+\[
+\theta_{fu}
+=
+\exp\!\left(
+\hat{\gamma}_{u,s(f),k(f)}
+\right),
+\]
+where
+\[
+\hat{\gamma}_{u,s,k}
+=
+\begin{cases}
+\hat{\tau}_{us} & \text{if } k = \text{spring}, \\
+\hat{\upsilon}_{us} & \text{if } k = \text{winter}.
+\end{cases}
+\]
+
+\vspace{0.5cm}
+
+\textbf{Allocation of Gross Yields to Fields}
+
+Total farm-level gross yields are allocated to fields proportionally to field size and the soil-specific yield index. The allocated gross yield for field $f$ on farm $i$ and crop category $u$ is given by:
+\[
+\hat{y}_{ifu}
+=
+y_{iu}
+\cdot
+\frac{
+A_{ifu} \cdot \theta_{fu}
+}{
+\sum_{f' \in i}
+A_{if'u} \cdot \theta_{f'u}
+}.
+\]
+
+Here, $A_{ifu}$ denotes the area of field $f$, and $\theta_{fu}$ is the soil- and crop sub-category-specific productivity index. The denominator represents the total effective production capacity of farm $i$ for crop category $u$, defined as area weighted by estimated productivity.
+
+\vspace{0.5cm}
+
+\textbf{Interpretation}
+
+This specification ensures that
+\[
+\sum_{f \in i} \hat{y}_{ifu} = y_{iu},
+\]
+and that variation in yields at the field level is driven by observed field size and estimated soil heterogeneity. Soil type effects are identified across farms within catchments.
+
+Farm-level heterogeneity is captured in observed yields $y_{iu}$. The model therefore decomposes these yields to the field level based on the structural assumption that variation in soil types reflects systematic productivity differences within the same crop category.
+
+\vspace{0.3cm}
+\noindent
+It should be noted, that in this analysis, we include catchment fixed effects to control for unobserved geographical heterogeneity. Farm-level fixed effects are not feasible in the current cross-sectional setup, as there is insufficient within-farm variation to separately identify soil type effects. With panel data, i.e. if multiple years of observations per farm were available, farm fixed effects would be a natural extension and would allow for controlling for time-invariant farm-specific heterogeneity.
+
+
+
+
+
+
+
+\section{Allocating Gross Yields from Farm to Field Level Version III} 
+
+
+ To allocate observed gross yields from farm to field level, a structural allocation model is applied in which farm-level gross yields within each crop category is distributed across the corresponding fields. The approach is based on field size and soil type, which are assumed to be key drivers of heterogeneity in productivity within the same crop category. While output is only observed at the farm (CVR) level by crop type, soil type and field structure are observed at field level. The model therefore exploits within-farm variation in soil composition to infer how aggregate gross yields can be allocated across fields.
+
+It should be noted that a crop–soil share-based model was initially considered. However, this specification did not allow for farm fixed effects due to perfect multicollinearity arising from the share structure, where soil shares sum to one within each crop type. This limits independent variation once fixed effects are included. The interaction specification used below avoids this issue by replacing shares with crop–soil indicators, removing the compositional constraint. This allows for the inclusion of farm fixed effects, as identification is instead based on variation across crop–soil cells within farms.
+
+\subsection{Model Specification – Soil Type Effects}
+
+
+Let farms be indexed by $i$, crops by $c$, fields by $f$, soil types by $s$, and catchments by $k$. The observed gross yield of crop c on farm i is $Y_{ic}$, while field-level area is $A_{ics}$. Soil types are aggregated into three categories: sand light, sand coarse, and clay to ensure sufficient observations (refer to limitations).
+
+Because farms can manage fields in more than one catchment, each farm is assigned to a dominant catchment based on the largest cultivated area share:
+
+\[
+k(i) = \arg\max_k \sum_{f \in i} A_{ifk}.
+\]
+
+The empirical model is specified as:
+
+\[
+\ln(Y_{ic}/A_{ic}) = \sum_{s,c} \tau_{cs} \cdot 1(c)\cdot 1(s) + \alpha_i + \gamma_{k(i)} + \varepsilon_{ic},
+\]
+
+where:
+\begin{itemize}
+    \item $Y_{ic}$ is total output of crop $c$ on farm $i$
+    \item $A_{ic} = \sum_s A_{ics}$ is total cultivated area for crop $c$ on farm $i$
+    \item $1(c)$ is a crop type indicator
+    \item $1(s)$ is a soil type indicator
+    \item $\alpha_i$ are farm fixed effects
+    \item $\gamma_{k(i)}$ are catchment fixed effects
+    \item $\varepsilon_{ic}$ is an error term
+\end{itemize}
+
+The coefficients $\tau_{cs}$ represent crop–soil interaction effects capturing average log productivity differences associated with soil type $s$ for crop $c$, relative to the omitted category. These coefficients should not be interpreted as causal effects or structural production elasticities. Instead, they capture reduced-form productivity differences across crop–soil combinations, conditional on farm and catchment fixed effects. As such, they reflect statistical associations consistent with observed aggregate output and are used as weights in the allocation of farm-level production to the field level.
+
+\textbf{Construction of field-level allocation }
+
+
+dr In the allocation step, each field is assigned the corresponding $\tau_{cs}$ based on its observed crop and soil type. Field-level outputs are then constructed by combining these productivity indices with observed field area shares, ensuring consistency with aggregate farm-level output. 
+
+
+Define:
+\[
+\theta_{fc} = \exp(\tau_{s(f)c}).
+\]
+
+Field-level allocation is then given by:
+
+\[
+\hat{y}_{ifc}
+=
+y_{ic}
+\cdot
+\frac{
+A_{ifc} \cdot \theta_{fc}
+}{
+\sum_{f' \in i}
+A_{if'c} \cdot \theta_{f'c}
+}.
+\]
+
+Here, $A_{ifc}$ denotes the area of field $f$, and $\theta_{fc}$ is the soil- and crop specific productivity index relevant to field $f$. The denominator represents the total effective production capacity of farm $i$ for crop category $c$, defined as area weighted by estimated productivity.
+
+\vspace{0.5cm}
+
+\textbf{Interpretation}
+
+Identification relies on within-farm variation in crop--soil combinations across fields. Conditional on farm fixed effects $\alpha_i$ and catchment fixed effects $\gamma_{k(i)}$, we assume that variation in crop allocation across soil types within farms is not systematically correlated with unobserved factors affecting productivity. Under this assumption, differences in soil composition identify the crop--soil interaction parameters $\tau_{cs}$.
+
+
+\textbf{Limitations}
+
+As noted, the estimated coefficients $\tau_{cs}$ should be interpreted as reduced-form allocation weights consistent with aggregate output, rather than structural production elasticities at the field level.
+
+A second limitation is the coarse classification of soil types. In the current dataset, observations for several soil categories (JB2, JB5, JB7, JB8, JB9, JB10, JB11) are limited, necessitating aggregation into three broader soil groups. While this improves statistical power and ensures sufficient within-category variation, it reduces the effect of soil heterogeneity. With more data—particularly a national panel dataset—finer soil classification would be both feasible and preferable.
+
+Similarly, crop categories are aggregated into broader groups due to data limitations. With a larger and more detailed dataset, a more disaggregated crop structure would allow for a more detailed characterization of crop–soil heterogeneity.
+
+Finally, a potential limitation is non random matching between crops and soil quality, whereby farmers may systematically allocate crops to higher-quality soils based on unobserved productivity, expectations, or managerial ability. In a cross-sectional setting with data from only a single year, this concern cannot be fully addressed, as there is no within-farm variation over time that would allow for controlling for such cropping decisions.
+
+
+\end{document}

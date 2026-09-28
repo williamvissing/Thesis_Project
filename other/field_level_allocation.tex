@@ -1,0 +1,170 @@
+\documentclass{scrartcl}
+\usepackage{amsmath}
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{geometry}
+\geometry{ a4paper, 
+    left = 25mm,
+    right = 25mm,
+    top = 20mm,
+    bottom = 25mm,
+    footskip = 10mm,} 
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{tikz}
+\usetikzlibrary{shapes}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\widowpenalty10000
+\clubpenalty10000
+\setlength\emergencystretch{3em}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{0.8}
+\renewcommand{\topfraction}{0.9} 
+\renewcommand{\bottomfraction}{0.8} 
+\renewcommand{\textfraction}{0.07} 
+\renewcommand{\floatpagefraction}{0.7}  
+
+\title{Estimating Field-Level Inputs and Outputs}
+\author{Helle Dahlgren Berlin and \\ William Louis Reingaard Vissing}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\noindent
+We allocate inputs and outputs to fields using a structural log-linear model that exploits within-farm variation in soil composition.
+The key assumption is that soil types explain differences in productivity across fields within the same production branch or crop category.
+While inputs and outputs are observed at the farm level, soil composition is observed at the field level, which allows us to infer how inputs and outputs are distributed across fields.
+For simplicity, the model is described based on three soil types (i.e., fine sandy soils, coarse sandy soils and clay soil) as in our empirical model specification.
+
+\subsection*{Input Model}
+Let $i = 1, \ldots, N$ index farm $\times$ production branch observations, $j = 1, \ldots, J$ index production branch, and $f \in \mathcal{F}_{ij}$ denote fields belonging to farm $i$ in branch $j$.
+The specification of the econometric model for inputs that we empirically estimate (with three soil types) is:
+\begin{equation}
+\begin{aligned}
+    \ln(a_{ij}/A_{ij}) = \alpha & + \beta_j D_{ij} + \gamma_1 \text{fine}_i + \gamma_2 \text{coarse}_i \\
+    & + \delta_{1j}(\text{fine}_i \times D_{ij}) + \delta_{2j}(\text{coarse}_i \times D_{ij})
+    + \lambda_g + \varepsilon_{ij}
+    \label{eq:model-spec-inputs}
+\end{aligned}
+\end{equation}
+where:
+\begin{itemize}
+    \item $a_{ij} =$ farm $i$'s input use in branch $j$.
+    \item $A_{ij} =$ farm $i$'s area of branch $j$.
+    \item $a_{ij}/A_{ij} =$ farm $i$'s input use per hectare in branch $j$.
+    \item $\text{fine}_i$, $\text{coarse}_i =$ farm $i$'s shares of fine sandy and coarse sandy soils.
+    Clay is the excluded soil type to avoid multicollinearity.
+    \item $D_{ij} =$ indicator equal to one if farm $i$ operates in branch $j$, and zero otherwise.
+    \item $\alpha =$ intercept.
+    \item $\beta_j =$ level shift in log input use per hectare for branch $j$ relative to the base branch (wheat).
+    \item $\gamma_1, \gamma_2 =$ marginal effects of fine sand and coarse sand shares on log input use per hectare for the base branch, relative to clay.
+    \item $\delta_{1j}, \delta_{2j} =$ differential marginal effects of fine sand and coarse sand shares for branch $j$, relative to the base branch.
+    \item $\lambda_g =$ fixed effect for group $g = 1, \ldots, G$.
+    \item $\varepsilon_{ij} =$ error term.
+\end{itemize}
+
+\subsection*{Output Model}
+Let $i = 1, \ldots, N$ index farm $\times$ crop category observations, $k = 1, \ldots, K$ index crop categories, and $f \in \mathcal{F}_{ik}$ denote fields belonging to farm $i$ in crop category $k$.
+The specification of the econometric model for outputs that we empirically estimate (with three soil types) is:
+\begin{equation}
+\begin{aligned}
+    \ln(y_{ik}/A_{ik}) = \alpha & + \beta_k D_{ik} + \gamma_1 \text{fine}_i + \gamma_2 \text{coarse}_i \\
+    & + \delta_{1k}(\text{fine}_i \times D_{ik}) + \delta_{2k}(\text{coarse}_i \times D_{ik}) + \mathbf{x}_i'\rho + \lambda_g + \varepsilon_{ik}
+    \label{eq:model-spec-outputs}
+\end{aligned}
+\end{equation}
+where:
+\begin{itemize}
+    \item $y_{ik} =$ farm $i$'s observed output from crop category $k$.
+    \item $A_{ik} =$ farm $i$'s total area of crop category $k$.
+    \item $y_{ik}/A_{ik} =$ farm $i$'s yield per hectare from crop category $k$.
+    \item $\text{fine}_i$, $\text{coarse}_i =$ farm $i$'s shares of fine sandy and coarse sandy soils.
+    Clay is the excluded soil type to avoid multicollinearity.
+    \item $D_{ik} =$ indicator equal to one if farm $i$ produces crop category $k$, and zero otherwise.
+    \item $\alpha =$ intercept.
+    \item $\beta_k =$ level shift in log yield per hectare for crop category $k$ relative to the base category (wheat).
+    \item $\gamma_1, \gamma_2 =$ marginal effects of fine sand and coarse sand shares on log yield per hectare for the base crop category, relative to clay.
+    \item $\delta_{1k}, \delta_{2k} =$ differential marginal effects of fine sand and coarse sand shares for crop category $k$, relative to the base category.
+    \item $\mathbf{x}_i =$ vector of additional crop-share controls, accounting for within-crop heterogeneity across sub-categories with different yield levels.
+    \item $\rho =$ vector of coefficients associated with $\mathbf{x}_i$.
+    \item $\lambda_g =$ fixed effect for group $g = 1, \ldots, G$.
+    \item $\varepsilon_{ik} =$ error term.
+\end{itemize}
+The output model follows the same structure as the input model in equation~(\ref{eq:model-spec-inputs}), but is extended with additional crop-share controls $\mathbf{x}_i$ to account for within-crop heterogeneity across sub-categories.
+
+\subsection*{Field-Level Allocation}
+The two models share the same logic for constructing soil productivity indices and allocating farm-level quantities to individual fields.
+We describe the procedure using generic notation, where $m$ indexes either a production branch $j$ or a crop category $k$, and $q_{im}$ denotes either input use $a_{ij}$ or output $y_{ik}$ for farm $i$.
+
+The marginal effect of soil type shares on log quantity per hectare depends on the production branch or crop category.
+For the base category, the marginal effects are $\gamma_1$ for fine sandy soils, $\gamma_2$ for coarse sandy soils, and $-(\gamma_1+\gamma_2)$ for clay.
+For any other category $m$, the marginal effects are $\gamma_1 + \delta_{1m}$, $\gamma_2 + \delta_{2m}$, and $-((\gamma_1 + \delta_{1m})+(\gamma_2 + \delta_{2m}))$, respectively.
+A useful interpretation is: a 10 percentage point increase in the share of fine sandy soils---equivalent to a reallocation of land from clay to fine sandy soils, holding total area constant---is associated with an approximate $10 \cdot (\gamma_1 + \delta_{1m})$ percent change in quantity per hectare.
+
+Based on the estimated marginal effects, we construct soil productivity indices.
+For the base category the indices are:
+\begin{align}
+    \theta_1 & = \exp(\gamma_1), \\
+    \theta_2 & = \exp(\gamma_2), \\
+    \theta_3 & = \exp(-(\gamma_1 + \gamma_2)),
+\end{align}
+while for any other category $m$, the indices are:
+\begin{align}
+    \theta_{1m} & = \exp(\gamma_1 + \delta_{1m}), \\
+    \theta_{2m} & = \exp(\gamma_2 + \delta_{2m}), \\
+    \theta_{3m} & = \exp(-((\gamma_1 + \delta_{1m}) + (\gamma_2 + \delta_{2m}))).
+\end{align}
+The index $\theta$ gives the proportional difference in quantity per hectare associated with a reallocation of land from clay to fine sandy or coarse sandy soils.
+Values above one indicate higher quantity per hectare relative to clay soils, while values below one indicate lower quantity per hectare.
+
+Farm-level quantities are then allocated to individual fields proportionally to both field size and soil productivity:
+\begin{align}
+    \hat{q}_{ifm} = q_{im} \cdot \frac{A_{ifm} \cdot \theta_{s(f)m}}
+    {\sum_{f'} A_{if'm} \cdot \theta_{s(f')m}}
+    \label{eq:allocation}
+\end{align}
+where $s(f) \in \{1, 2, 3\}$ denotes the soil type of field $f$, and $A_{ifm}$ is the area of field $f$ belonging to farm $i$ in category $m$.
+By construction, $\sum_f \hat{q}_{ifm} = q_{im}$, ensuring that field-level allocations sum to the observed farm-level total for each farm and category.
+
+\newpage
+
+\subsection*{Sub-Category Yield Effects}
+For outputs specifically, the allocation in equation~(\ref{eq:allocation}) 
+can be extended to account for yield differentials across crop sub-categories 
+within the same aggregate category $k$.
+
+The controls $\mathbf{x}_i$ serve two purposes.
+First, to the extent that crop sub-category composition varies across soil types --- for instance, if farms on sandy soils tend to grow
+proportionally more spring barley than farms on clay soils --- including
+$\mathbf{x}_i$ can help ensure that the estimated soil coefficients $\gamma_s$
+and $\delta_{sk}$ reflect soil productivity differences rather than
+differences in crop composition.
+Second, the estimated coefficients $\hat{\rho}$ measure how much higher or
+lower yield per hectare is for a given sub-category relative to the residual
+mix --- for example, whether winter barley yields more or less DKK per hectare within the aggregate barley category.
+
+We use these estimated rhos to refine the field-level allocation.
+Specifically, let $c(f)$ denote the crop sub-category of field $f$ (e.g.\ winter barley or spring barley), and let $\exp(\hat{\rho}_{c(f)})$ be the corresponding yield index, where $\exp(\hat{\rho}_{c(f)}) > 1$ indicates above-average yield and $\exp(\hat{\rho}_{c(f)}) < 1$ indicates below-average yield.
+Fields whose sub-category is not controlled for receive $\exp(\hat{\rho}_{c(f)}) = 1$, meaning no adjustment.
+The extended field-level allocation of outputs thus becomes:
+\begin{align}
+    \hat{y}_{ifk} = y_{ik} \cdot \frac{A_{ifk} \cdot \theta_{s(f)k} \cdot \exp(\hat{\rho}_{c(f)})}
+    {\sum_{f'} A_{if'k} \cdot \theta_{s(f')k} \cdot \exp(\hat{\rho}_{c(f')})}
+    \label{eq:allocation-extended}
+\end{align}
+By construction, $\sum_f \hat{y}_{ifk} = y_{ik}$, so field-level estimates always sum to the observed farm total.
+
+Two assumptions underlying this extension deserve attention.
+First, $\hat{\rho}$ is estimated from farm-level crop-share variables, 
+but applied at the field level based on the observed sub-category of each field.
+This assumes that a field growing, say, winter barley yields 
+proportionally more than a field growing spring barley by the same amount 
+regardless of which farm it belongs to or other field-specific characteristics.
+Second, the controls $\mathbf{x}_i$ were included in the model in order to 
+obtain less biased soil coefficients, while using $\hat{\rho}$ to refine the allocation is a secondary application of the estimation results, and should be interpreted with some caution.
+
+\end{document}
